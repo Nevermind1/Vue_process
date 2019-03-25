@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+	<style>
+	.red{color: red;}
+	.thin{font-weight: 100;}
+	.italic{font-style: italic;}
+	.active{letter-spacing: 0.5em}
+
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- 使用数组传递 v-bind -->
+		<h1 :class="['thin','italic']">这是个h1</h1>
+
+		<!-- 在数组里使用三元表达式 -->
+		<h1 :class="['thin','italic',flag?'active':'']">这是个h1</h1>
+
+		<!-- 在数组里使用对象代替三元表达式，提高阅读性 -->
+		<h1 :class="['thin','italic',{'active':flag}]">这是个h1</h1>
+
+		<!-- 在为1ass使用v-bind绑定对象的时候，对象的属性是类名，由于对象的属性可带引号，也可不带引号，属性的值是一个标识符 -->
+		<h1 :class="{thin:true,active:true}">这是个h1</h1>
+
+		<h1 :class="classObj">这是个h1</h1>
+	</div>
+
+
+	<script type="text/javascript">
+	var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+		flag:1
+		classObj:{thin:true,active:true}
+	},
+	methods:{//当前Vue实例所有可用的方法
+
+	}
+})
+
+	</script>
+</body>
+</html>
