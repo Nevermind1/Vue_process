@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div>
+			order:<input type="text" v-model="order">
+			name:<input type="text" v-model="name">
+			<input type="button" @click="add" value="添加">
+		</div>
+
+		<!-- v-for循环的时候，key属性只能使用number获取string-->
+		<!-- key在使用的时候，必须使用v-bind 属性绑定的形式，指定key的值-->
+		<!-- 在组件中，使用v-for循环的时候，或者在一些特殊情况中，如果v-for有问题，必须在使用v-for的同时，指定唯一的字符串/数字类型：key值 -->
+		<p v-for="item in list" :key="item.id"><input type="checkbox">{{item.order}}:{{item.name}}</p>
+	</div>
+
+
+	<script type="text/javascript">
+	var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+		order:'',
+		name:'',
+		list:[
+		{order:1,name:'a'},
+		{order:2,name:'b'},
+		{order:3,name:'c'},
+		{order:4,name:'d'},
+		{order:5,name:'e'},
+		{order:6,name:'f'},
+		]
+	},
+	methods:{//当前Vue实例所有可用的方法
+		add(){
+			this.list.push({order:this.order,name:this.name})
+		}
+	}
+})
+
+	</script>
+</body>
+</html>
