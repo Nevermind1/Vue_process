@@ -1,0 +1,29 @@
+Vue不提倡操作DOM
+
+v-cloak:解决闪烁的问题（网速较慢，未加载完全vue的情况下，会先把（插值表达式）{{}}里面的元素显示出来，加载完后解析表达式，会造成闪烁）。
+v-text：和{{}}表达式没什么区别，但是没有闪烁问题，但是会覆盖后面元素内容。
+{{}}和v-text都不能把html表达式正确解析，需要用v-html。
+v-bind:提供绑定属性，把mytitle当做一个JS字符串变量，具有字符串属性，合法JS表达式能被正常解析（比如+' 123'成为“自定义title 123”），可以简写为冒号，即":"。
+v-on：提供绑定事件，可简写为“@”，
+
+
+<div id="app">
+		<p>{{ msg }}</p>
+		<input type="button" value="按钮" v-bind:title="mytitle +' 123'">
+		<button value="" v-on:click="show">提示</button>
+	</div>
+
+
+var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+		msg:"hello world！",
+		msg2:'<h1>h1标签</h1>',
+		mytitle:'自定义title'
+	},
+	methods:{//当前Vue实例所有可用的方法
+		show:function(){
+			alert('Hello')
+		}
+	}
+})
