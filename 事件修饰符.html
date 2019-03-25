@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+	<style>
+	.div1{
+		width: 100px;height: 100px;background: pink;
+	}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="div1" @click="divClick">
+			<!-- .stop阻止事件冒泡 -->
+			<input type="button" value="点击" @click.stop="btnClick"><br>
+		</div>
+
+		<!-- .prevent阻止默认行为 -->
+		<a href="http://www.baidu.com" @click.prevent="clickA">百度</a><br>
+
+		<!-- .capture捕获事件触发的机制，即先触发外层div再触发内层btn -->
+		<div class="div1" @click.capture="divClick">
+			<input type="button" value="点击" @click="btnClick"><br>
+		</div><br>
+
+		<!-- .self点击自己(div)的时候才触发，有点像阻止冒泡，区别：不会阻止其他冒泡 -->
+		<div class="div1" @click.self="divClick">
+			<input type="button" value="点击" @click="btnClick"><br>
+		</div><br>
+		
+		<!-- .once触发一次。当前触发阻止默认行为一次，再次点击仍然触发默认行为 -->
+		<a href="http://www.baidu.com" @click.prevent.once="clickA">百度</a><br>
+	</div>
+
+	<script type="text/javascript">
+	var vm=new Vue({
+		el:"#app",
+		data:{
+			msg:"猥琐发育~~别浪。。。",
+		},
+		methods:{
+			divClick(){
+				console.log("clicked div")
+			},
+			btnClick(){
+				console.log("clicked btn")
+			},
+			clickA(){
+				console.log("clicked A")
+			}
+		}
+	})
+
+	</script>
+</body>
+</html>
