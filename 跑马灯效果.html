@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>//引入Vue
+</head>
+<body>
+	<div id="app">
+		<button @click="run">走</button>
+		<button>停</button>
+		<p>{{msg}}</p>
+	</div>
+
+	<script type="text/javascript">
+var vm=new Vue({
+	el:"#app",
+	data:{
+		msg:"猥琐发育~~别浪。。。"
+	},
+	methods:{
+		run:function(){
+			// var _this=this
+			setInterval(()=>{//箭头函数：内部this指向与外部保持一致
+				//将第一个字符截取放在最后和剩余的字符拼接，再把新值赋给msg。(获取vm内的数据或方法需要使用this关键字)
+				this.msg=this.msg.substring(1)+this.msg.substring(0,1)
+				console.log(this.msg)	
+			},400)
+			
+		}
+	}
+})
+
+	</script>
+</body>
+</html>
