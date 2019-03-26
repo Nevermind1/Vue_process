@@ -21,7 +21,7 @@
 
 				<label for="">
 					Name:
-					<input type="text"  class="form-control" v-model="name">
+					<input type="text"  class="form-control" v-model="name" @keyup.enter='add'>
 				</label>
 
 				<label for="">
@@ -32,7 +32,9 @@
 
 				<label for="">
 					搜索：
-					<input type="text"  class="form-control" v-model="keyword">
+
+					<!-- Vue所有指令在调用的时候都以 v- 开始 ，但定义的时候不需要-->
+					<input type="text"  class="form-control" v-model="keyword" v-focus v-color>
 				</label>
 
 			</div>
@@ -51,7 +53,7 @@
 				<tr v-for="item in search(keyword)" :key="item.id">
 					<td>{{item.id}}</td>
 					<td>{{item.name}}</td>
-					<td>{{item.ctime}}</td>
+					<td>{{item.ctime|dataFormat('xYYY-MM-DD')}}</td>
 					<td>
 						<a href="" @click.prevent="del(item.id)">删除</a>
 					</td>
@@ -59,9 +61,65 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<div id="app2">
+		<h2>{{ msg}}</h2>
 
+	</div>
 
 	<script type="text/javascript">
+	// 过滤器
+	Vue.filter('dataFormat',function(dataStr,pattern=''){
+		var dt=new Date(dataStr)
+		var y=dt.getFullYear()
+		// str的padStart(填充最大长度,'填充字符')
+		var m=(dt.getMonth()+1).toString().padStart(2,'0')
+		var d=dt.getDay().toString().padStart(2,'0')
+		// return y+'-'+m+'-'+d
+
+		if(pattern.toLowerCase()==='yyyy-mm-dd'){
+			return `${y}-${m}-${d}`
+
+		}else{
+			var hh=dt.getHours().toString().padStart(2,'0')
+			var mm=dt.getMinutes().toString().padStart(2,'0')
+			var ss=dt.getSeconds().toString().padStart(2,'0')
+
+			return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+		}
+
+	})
+
+	// 定义全局按键修饰符,F2=113
+	Vue.config.keyCodes.f2=113
+
+	// 使用Vue.directive()定义全局的指令
+	// 参数一为指令名称，参数二为一个对象，有一些指令相关的函数，可以在
+	// 特定的阶段执行相关的操作
+	Vue.directive('focus',{
+		bind:function(el){//每当指令绑定到元素上的时候立即执行这个bing函数，并且只执行一次
+
+			//在每个函数中，第一个参数永远是el，表示被绑定了指令的元素，属于原生JS对象
+			// el.focus()
+		},
+
+		inserted:function(el){//inserted表示元素插入到DOM中的时候会执行inserted函数，只执行一次
+			// 使用v-focus调用
+			el.focus()	
+		},
+
+		updated:function(){//更新VNode更新的时候会执行updated，可能会触发多次
+
+		}
+	})
+
+	// 自定义设置字体颜色的指令
+	Vue.directive('color',{
+		bind:function(el){
+			el.style.color='red'
+		}
+	})
+
 	var vm=new Vue({
 	el:"#app",//要控制的范围
 	data:{//数据
@@ -95,24 +153,53 @@
 					return true;
 				}
 			})
-			console.log(index)*/
-		},
-		search(keyword){
-			var newList=[]
-			this.list.forEach(item=>{
+	console.log(index)*/
+},
+search(keyword){
+	var newList=[]
+	this.list.forEach(item=>{
 				// console.log(item.id)
 				
 				if(item.name.indexOf(keyword)!=-1){
 					newList.push(item)
 				}
-				
-				
 			})
-			return newList
-		}
-	}
+	return newList
+}
+}
 })
 
-	</script>
+	// 自定义私有过滤器，名称相同的情况下，优先调用私有过滤器
+	var vm2=new Vue({
+		el:"#app2",
+		data:{
+			msg:new Date()
+		},
+		methods:{
+
+			},
+		filters:{//私有过滤器
+
+			dataFormat:function(dataStr,pattern=''){
+				var dt=new Date(dataStr)
+				var y=dt.getFullYear()
+				var m=(dt.getMonth()+1).toString().padStart(2,'0')
+				var d=dt.getDay().toString().padStart(2,'0')
+		// return y+'-'+m+'-'+d
+
+		if(pattern.toLowerCase()==='yyyy-mm-dd'){
+			return `${y}-${m}-${d}`
+
+		}else{
+			var hh=dt.getHours().toString().padStart(2,'0')
+			var mm=dt.getMinutes().toString().padStart(2,'0')
+			var ss=dt.getSeconds().toString().padStart(2,'0')
+
+			return `${y}-${m}-${d} ${hh}:${mm}:${ss} 过滤器2`
+		}
+	}
+}
+})
+</script>
 </body>
 </html>
