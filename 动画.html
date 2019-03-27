@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+	<link rel="stylesheet" href="animation.css">
+	<style>
+	/*时间点，进入之前元素的起始状态*/
+	.v-enter,.v-leave-to{
+		opacity: 0;
+		transform: translateX(150px);
+	}
+
+	/*入场动画的时间段*/
+	.v-leave-active,
+	/*离场动画的时间段*/
+	.v-enter-active{
+		transition:all 0.3s ease;
+	}
+
+	.my-enter,.my-leave-to{
+		opacity: 0;transform: translateY(200px);
+	}
+	.my-leave-active,.my-enter-active{
+		transition:all 4s ease;
+	}
+
+	.ball{
+		width: 15px;height: 15px;border-radius: 50%;
+		background-color: red;
+	}
+
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="button" value="按钮" @click="flag1=!flag1">
+		<transition >
+			<h3 v-if="flag1">h6标签</h3>	
+		</transition>
+		<hr>
+		<input type="button" value="按钮" @click="flag=!flag">
+
+		<!-- 需要添加animated才能使用里面的样式 -->
+		<transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut" name="my">
+			<h3 v-if="flag">h3标签</h3>	
+		</transition>
+
+		<hr>
+		<input type="button" value="按钮" @click="flag2=!flag2">
+		<transition enter-active-class=" zoomIn" leave-active-class=" zoomOut">
+			<!-- 讲animated放在标签里面可以避免多次敲animated -->
+			<h3 v-if="flag2" class="animated">h3标签</h3>	
+		</transition>
+
+		<!-- 小球动画 -->
+		<br><br><br><br>
+		<input type="button" value="滚" @click="flag3=!flag3"><br><br>
+		<transition
+		@before-enter="beforeEnter"
+		@enter="enter"
+		@after-enter="afterEnter">
+		<div class="ball" v-if="flag3"></div>
+	</transition>
+</div>
+
+
+<script type="text/javascript">
+
+
+
+var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+		flag:false,
+		flag1:false,
+		flag2:false,
+		flag3:false,
+	},
+	methods:{//当前Vue实例所有可用的方法
+		beforeEnter(el){
+			el.style.transform="translate(0,0)"
+		},
+		enter(el){
+			el.offsetWidth//没什么实际作用，但是不写无动画效果
+			el.style.transform="translate(150px,450px)"	
+			el.style.transition='all 1s ease'
+			console.log(2)
+			// done()
+		},
+		afterEnter(el){
+			// el.style.opacity=0
+			// this.flag3=!this.flag3
+		}
+	}
+})
+
+</script>
+</body>
+</html>
