@@ -11,10 +11,19 @@
 		line-height: 35px;
 		padding-left: 2px;
 		font-size: 20px;
+		width: 100%;
 	}
 	.v-enter,.v-leave-to{opacity: 0;transform:translateY(80px);}
 	.v-enter-active,.v-leave-active{transition:all 0.6s ease;}
 	li:hover{background-color: pink;transition:all 0.3s ease;}
+
+	/*v-move和v-leave-active配合使用能够实现列表后续的元素渐渐往上飘*/
+	.v-move{
+		transition:all 0.3s ease;
+	}
+	.v-leave-active{
+		position: absolute;
+	}
 	</style>
 </head>
 <body>
@@ -32,14 +41,11 @@
 
 			<input type="button" value="添加" @click="add">
 
-			<ul>
-
 				<!-- 在实现列表过渡的时候，如果需要过渡的元素，是通过v-for循环渲染出来的，不能使用transition 包裹，需要使用transitionGroup -->
 				<!-- 如果要为v-for循环创建的元素设置动画，须为每一个元素设置：key属性 -->
-				<transition-group>
-				<li v-for="item in list" :key="item.id">{{item.id}}----{{item.name}}</li>
+				<transition-group appear tag="ul"> <!-- appear实现页面入场动画效果  tag选择性让该元素被渲染成想要的元素-->
+				<li v-for="(item,i) in list" :key="item.id" @click="del(i)">{{item.id}}----{{item.name}}</li>
 			</transition-group>
-		</ul>
 	</div>
 
 
@@ -60,6 +66,9 @@
 		add(){
 			this.list.push({id:this.id,name:this.name})
 			this.id=this.name=''
+		},
+		del(i){
+			this.list.splice(i,1)
 		}
 	}
 })
