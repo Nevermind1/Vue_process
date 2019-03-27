@@ -4,6 +4,15 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script type="text/javascript" src="vue.min.js"></script>
+	<style>
+.v-enter,.v-leave-to{
+	opacity: 0;transform:translateX(150px);
+}
+.v-enter-active,.v-leave-active{
+	transition:all 0.5s ease;
+}
+
+	</style>
 </head>
 <body>
 	<div id="app">
@@ -20,24 +29,28 @@
 		<!-- 或者 -->
 		<a href="" @click.prevent="tron='login'">登录</a>
 		<a href="" @click.prevent="tron='register'">注册</a>
-		<!-- componen是一个占位符， :is属性可以用来指定要展示组件的名称 -->
-		<component :is="tron">
+		
+		<!-- 通过mode属性设置组件切换先后进入方式 -->
+		<transition mode="out-in">
+			<!-- componen是一个占位符， :is属性可以用来指定要展示组件的名称 -->
+			<component :is="tron">
+			</transition>
 
-	</div>
-
-
-	<script type="text/javascript">
-	Vue.component('login',{
-		template:'<h3>登录组件</h3>'
-	})
+		</div>
 
 
-	Vue.component('register',{
-		template:'<h3>注册组件</h3>'
-	})
+		<script type="text/javascript">
+		Vue.component('login',{
+			template:'<h3>登录组件</h3>'
+		})
 
 
-	var vm=new Vue({
+		Vue.component('register',{
+			template:'<h3>注册组件</h3>'
+		})
+
+
+		var vm=new Vue({
 	el:"#app",//要控制的范围
 	data:{//数据
 		flag:true,
@@ -53,6 +66,6 @@
 	}
 })
 
-	</script>
-</body>
-</html>
+		</script>
+	</body>
+	</html>
