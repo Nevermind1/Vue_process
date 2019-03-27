@@ -43,6 +43,7 @@
 		<input type="button" value="按钮" @click="flag=!flag">
 
 		<!-- 需要添加animated才能使用里面的样式 -->
+<!-- 		 动画需要用transition包裹-->
 		<transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut" name="my">
 			<h3 v-if="flag">h3标签</h3>	
 		</transition>
