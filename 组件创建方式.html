@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 使用自建组件 驼峰命名法-->
+		<my-com1></my-com1>
+
+		<!-- 使用自建组件 未使用驼峰命名法-->
+		<mycom1></mycom1>
+
+		<mycom2></mycom2>
+
+		<mycom3></mycom3>
+	</div>
+
+<!-- 在被控制的#APP外面使用template元素，定义组件的HTML模板结构 -->
+<template id="tmp">
+	<div>
+		<h1>通过template元素，在外部定义的组件结构</h1>
+		<h4>效果</h4>
+	</div>
+</template>
+
+<div id="app2">
+	<mycom3></mycom3>
+</div>
+
+	<script type="text/javascript">
+
+	// 方法1
+	var com1=Vue.extend({
+		template:'<h3>使用extend创建的组件</h3>'
+	})
+
+	Vue.component('myCom1',com1)
+
+	Vue.component('mycom1',com1)
+
+	// 可以简写为
+	// Vue.component('mycom1',Vue.extend({
+	// 	template:'<h3>使用extend创建的组件</h3>'
+	// }))
+
+
+// 方法2
+// 注意：无论以哪种创建的组件，模板内容有且只能有唯一的一个根元素
+Vue.component('mycom2',{
+	template:'<h3>这是直接使用Vue.component创建的组件</h3>'
+	// 需要用一个容器包裹
+	// template:'<div><h3>这是直接使用Vue.component创建的组件</h3><span>哈哈</span></div>'
+})
+
+// 方法3
+Vue.component('mycom3',{
+	template:'#tmp'
+})
+
+var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+
+	},
+	methods:{//当前Vue实例所有可用的方法
+
+	}
+})
+
+var vm2=new Vue({
+	el:"#app2"
+})
+
+</script>
+</body>
+</html>
