@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<mycom></mycom>
+		<counter></counter><hr>
+		<counter></counter><hr>
+		<counter></counter><hr>
+	</div>
+
+<template id="tmp">
+	<div>
+		<input type="button" value="+1" @click="add">
+		<h3>{{count}}</h3>
+	</div>
+</template>
+
+	<script type="text/javascript">
+	Vue .component('mycom',{
+		// 组件自己的data，必须是一个方法，返回一个对象,调用方式和实例中的一致
+		template:'<h1>这是全局组件 --- {{msg}}</h1>',
+		data:function(){
+			return {
+				msg:'组件中的data数据'
+			}
+		}
+	})
+
+
+	// 自定义外部(相对于counter是外部)对象
+	// var dataObj={count:0}
+
+	Vue.component('counter',{
+		template:'#tmp',
+		data:function(){
+			// return dataObj	//返回该对象会导致所有组件公用同一个对象，数据共享造成冲突
+			return {count:0}	//返回该对象不会
+		},
+		methods:{
+			add(){
+				this.count++
+			}
+		}
+	})
+
+	var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+
+	},
+	methods:{//当前Vue实例所有可用的方法
+
+	}
+})
+
+	</script>
+</body>
+</html>
