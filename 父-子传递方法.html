@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 父组件向子组件传递方法，使用v-on，简写为@ -->
+		<com2 v-on:func="show"></com2>	
+	</div>
+
+<template id="tmp1">
+	<div>
+		<h1>这是子组件</h1>
+		<input type="button" value="触发按钮" @click="myclick">
+	</div>
+</template>
+
+	<script type="text/javascript">
+
+	var com2={
+		template:'#tmp1',
+		methods:{
+			myclick(){
+				// console.log('子组件myclick方法')
+
+				// emit英文：触发，调用
+				// 不但可以传递方法，还能传递对象
+				this.$emit('func',111,222)
+			}
+		}
+	}
+
+
+	var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+
+	},
+	methods:{//当前Vue实例所有可用的方法
+		show(data,data1){
+			console.log('调用了父组件的show方法:---'+data+data1)
+		}
+	},
+	components:{
+		com2
+	}
+})
+
+	</script>
+</body>
+</html>
