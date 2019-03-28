@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<mylogin></mylogin>
+
+		<!-- 调用私有组件 -->
+		<login></login>
+	</div>
+
+
+	<script type="text/javascript">
+
+	// 通过对象字面量的形式，定义了一个模板对象
+	var login={
+		template:'<h1>adfwa</h1>'
+	}
+
+	// 通过Vue.component把组件模板对象，注册为一个全局Vue组件，同时取名，通过标签形式在页面中直接引用
+	Vue.component('mylogin',login)
+
+	var vm=new Vue({
+	el:"#app",//要控制的范围
+	data:{//数据
+
+	},
+	methods:{//当前Vue实例所有可用的方法
+
+	},
+	// 创建私有组件并调用
+	components:{
+		login
+	}
+})
+
+	</script>
+</body>
+</html>
