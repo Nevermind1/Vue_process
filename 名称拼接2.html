@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="./vue.min.js"></script>
+    <!-- <script src="./vue-router.js"></script> -->
+    <link rel="stylesheet" href="./bootstrap.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">firstName</label>
+                <input v-model="firstName" type="text" class="form-control" id="exampleInputName2"
+                    placeholder="firstName">
+            </div>
+            +
+            <div class="form-group">
+                <label for="exampleInputEmail2">lastName</label>
+                <input v-model="lsatName" type="text" class="form-control" id="exampleInputEmail2"
+                    placeholder="lastName">
+            </div>
+            =
+            <div class="form-group">
+                <label for="exampleInputEmail2">fullName</label>
+                <input v-model="fullName" type="text" class="form-control" id="exampleInputEmail2" placeholder="">
+            </div>
+        </form>
+
+
+        <!-- <input type="text" v-model="firstName">+
+        <input type="text" v-model="lsatName">=
+        <input type="text" v-model="fullName"> -->
+    </div>
+
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app",//要控制的范围
+            data: {//数据
+                firstName: '',
+                lsatName: '',
+                fullName: ''
+            },
+            methods: {//当前Vue实例所有可用的方法
+
+            },
+            watch: {//这个属性监视data中指定数据的变化然后触发这个watch中对应函数
+                // 方法1    用this调用data数据
+                // firstName: function () {
+                //     this.fullName = this.firstName + " " + this.lsatName
+                // },
+                //方法2     使用参数直接进行拼接
+                firstName: function (newVal,oldVal) {
+                    this.fullName = newVal + " " + this.lsatName
+                },
+                lsatName: function (newVal) {
+                    this.fullName = this.firstName + " " + newVal
+                },
+            },
+        })
+
+    </script>
+</body>
+
+</html>
